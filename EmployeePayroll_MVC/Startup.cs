@@ -1,11 +1,18 @@
+using BusinessLayer.InterFace;
+using BusinessLayer.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RepoLayer.Interface;
+using RepoLayer.Service;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,6 +31,9 @@ namespace EmployeePayroll_MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddTransient<IEmpBusiness, EmpBusiness>();
+            services.AddTransient<IEmpRepo, EmpRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
