@@ -16,7 +16,7 @@ namespace CommonLayer.Model
         [Required(ErrorMessage = "Choose one")]
         public string Gender { get; set; }
         [Required(ErrorMessage = "{0} Should not be empty")]
-        [RegularExpression(@"[A-Z][a-z]{2}", ErrorMessage =  "Enter valid {0}")]
+        [RegularExpression(@"[A-Z][a-z]+", ErrorMessage =  "Enter valid {0}")]
         public string Department { get; set; }
         [Required(ErrorMessage = "{0} Should not be empty")]
         [RegularExpression(@"[0-9]+.[0-9]{2}", ErrorMessage = "Enter valid data")]
