@@ -6,11 +6,11 @@
 
 <h1>EmployeeList</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
+<p class="create">
+    <a asp-action="AddEmp">Create New</a>
 </p>
 <table class="table">
-    <thead>
+    <thead >
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.EmployeeId)
@@ -49,7 +49,7 @@
                 @Html.DisplayFor(modelItem => item.EmployeeName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProfileImg)
+                <img src="@Url.Content(item.ProfileImg)" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Gender)

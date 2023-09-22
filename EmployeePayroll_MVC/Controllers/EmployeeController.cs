@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.InterFace;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,10 +43,11 @@ namespace EmployeePayroll_MVC.Controllers
         }
 
         //Get EmployeeDetail
-        public IActionResult Details(int? id)
+        public IActionResult Details()
         {
+            int id = (int)HttpContext.Session.GetInt32("EmpId");
             EmployeeModel employee = empBusiness.GetEmployee(id);
-            if (id != null && employee != null)
+            if (/*id != null && */employee != null)
             {
                 return View(employee);
             }
@@ -110,6 +112,41 @@ namespace EmployeePayroll_MVC.Controllers
             else
             {
                 return NotFound();
+            }
+        }
+
+        //Login Employee
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginEmpModel model)
+        {
+            try
+            {
+               if(ModelState.IsValid)
+                {
+                    var result = empBusiness.LoginEmployee(model);
+                    if (result != null)
+                    {
+                        HttpContext.Session.SetInt32("EmpId", result.EmployeeId);
+                        HttpContext.Session.SetString("EmpName", result.EmployeeName);
+                        return RedirectToAction("Details");
+                    }
+                    return NotFound();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
             }
         }
     }

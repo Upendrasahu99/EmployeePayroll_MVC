@@ -1,0 +1,22 @@
+﻿body {
+    background-color: lightgray;
+}
+.table{
+    background-color: white;
+}
+thead{
+    background-color: gray;
+}
+.row {
+    display: flex;
+    justify-content: center;
+}
+.add{
+    text-align:center;
+}
+.btn-primary{
+    background-color: gray;
+}
+.create{
+    float: right;
+}

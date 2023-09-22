@@ -12,5 +12,6 @@ namespace RepoLayer.Interface
         public EmployeeModel GetEmployee(int? EmployeeId);
         public EmployeeModel UpdateEmployee(EmployeeModel employeeModel);
         public string DeleteEmployee(int? employeeId);
+        public EmployeeModel LoginEmployee(LoginEmpModel model);
     }
 }

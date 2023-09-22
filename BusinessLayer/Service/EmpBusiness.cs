@@ -81,5 +81,21 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+
+
+
+        //Login Employee
+        public EmployeeModel LoginEmployee(LoginEmpModel model)
+        {
+            try
+            {
+                return empRepo.LoginEmployee(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

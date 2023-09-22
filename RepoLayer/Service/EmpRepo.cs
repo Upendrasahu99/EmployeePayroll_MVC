@@ -111,7 +111,6 @@ namespace RepoLayer.Service
         //view Employee By ID
         public EmployeeModel GetEmployee(int? EmployeeId)
         {
-
             try
             {
                 SqlCommand command = new SqlCommand("RetrieveEmp", connection);
@@ -173,7 +172,7 @@ namespace RepoLayer.Service
                 command.Parameters.AddWithValue("@Notes", employeeModel.Notes);
 
                 connection.Open();
-                int rowAffected = command.ExecuteNonQuery(); ;
+                int rowAffected = command.ExecuteNonQuery();
 
                 if (rowAffected > 0)
                 {
@@ -197,7 +196,6 @@ namespace RepoLayer.Service
         //Delete Employee Detail
         public string DeleteEmployee(int? employeeId)
         {
-
             try
             {
                 SqlCommand command = new SqlCommand("DeleteEmp", connection);
@@ -215,6 +213,44 @@ namespace RepoLayer.Service
                 {
                     return "Employee detail not deleted";
                 }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        //Login Employee
+        public EmployeeModel LoginEmployee(LoginEmpModel model)
+        {
+            try
+            {
+                SqlCommand command = new SqlCommand("LoginEmp", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@EmpId", model.EmployeeId);
+                command.Parameters.AddWithValue("@Name", model.EmployeeName);
+
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                EmployeeModel employee = new EmployeeModel();
+                if (reader.Read())
+                {
+                    employee.EmployeeId = reader["EmployeeId"] == DBNull.Value ? default : reader.GetInt32("EmployeeId"); //It will check tha data from column if value is null it will return the default value.
+                    employee.EmployeeName = reader["EmployeeName"] == DBNull.Value ? default : reader.GetString("EmployeeName");
+                    employee.ProfileImg = reader["ProfileImg"] == DBNull.Value ? default : reader.GetString("ProfileImg");
+                    employee.Gender = reader["Gender"] == DBNull.Value ? default : reader.GetString("Gender");
+                    employee.Department = reader["Department"] == DBNull.Value ? default : reader.GetString("Department");
+                    employee.Salary = reader["Salary"] == DBNull.Value ? default : reader.GetDecimal("Salary");
+                    employee.StartDate = reader["StartDate"] == DBNull.Value ? default : reader.GetDateTime("StartDate");
+                    employee.Notes = reader["Notes"] == DBNull.Value ? default : reader.GetString("Notes");                    
+                }
+                return employee;
             }
             catch (Exception)
             {
